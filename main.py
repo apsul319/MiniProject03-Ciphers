@@ -24,7 +24,28 @@ def ceaser(text, shift): # Shifts the letters in a text line to either encode (p
                 letter = alphabet[(shift + alphabet.index(letter.lower())) % 26].upper()
         newString += letter
     return newString
-            
 
+def vigenere(text, key, crypt): # crypt: 1 for encode, -1 for decrypt
+  keyIndex = 0
+  keyLen = len(key)
+  newString = ""
+  for letter in str(text):
+    if letter.upper() != letter.lower():
+      if letter.islower():
+        letter = alphabet[(alphabet.index(letter) + crypt*alphabet.index(key[keyIndex])) % 26]
+      else:
+        letter = alphabet[(alphabet.index(letter.lower()) + crypt*alphabet.index(key[keyIndex])) % 26].upper()
+      keyIndex = (keyIndex + 1) % keyLen
+    newString += letter
+  return newString
+
+result = "Jonisafool"
+key = "robotics"
+for index in range(1):
+  result = vigenere(result, key.lower(), 1)
+print(result)
+            
+# text = "moab"
 # for index in range(26):
-#     print("Ceaser (Shift = " + str(index) + "): " + ceaser("Wklv lv d flskhu", -index))
+#     print("Ceaser (Shift = " + str(index) + "): " + ceaser(text, -index))
+# print("\nAtbash: " + atbash(text) + "\n")
