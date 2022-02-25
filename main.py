@@ -82,7 +82,7 @@ def playfair(text, key, crypt): # 1 for encrypt, -1 for decipher
   text = ''.join([i for i in text if i.isalpha()]).lower().replace("j", "i")
   if crypt == 1:
     ind = len(text)
-    for index in range(len(text)-1, -1, -1):
+    for index in range(len(text)-1, 0, -1):
       if text[index] == text[index-1]:
         text = text[:index] + "x" + text[index:]
         ind = ind + 1
