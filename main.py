@@ -1,3 +1,7 @@
+import enum
+from tracemalloc import start
+
+
 alphabet = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
 # --- Atbash Cipher ---
@@ -75,7 +79,13 @@ def search(key, a, b, pos):
 
 
 def playfair(text, key, crypt): # 1 for encrypt, -1 for decipher
-  text = ''.join([i for i in text if i.isalpha()]).lower()
+  text = ''.join([i for i in text if i.isalpha()]).lower().replace("j", "i")
+  if crypt == 1:
+    ind = len(text)
+    for index in range(len(text)-1, -1, -1):
+      if text[index] == text[index-1]:
+        text = text[:index] + "x" + text[index:]
+        ind = ind + 1
   if len(text) % 2 != 0: return "Number of letters in text must be even (Add filler letters such as \"z\" or \"x\")"
   newString = ""
   pos = [0 for i in range(4)]
@@ -94,6 +104,6 @@ def playfair(text, key, crypt): # 1 for encrypt, -1 for decipher
       a = key[pos[0]][pos[3]]
       b = key[pos[2]][pos[1]]
     newString += a + "" + b
-  return newString.upper()
+  return (f"\nOriginal Text: {text}\nCiphered Code: {newString.upper()}\n")
     
-print(playfair("instrumentsz", "monarchy", 1))
+print(playfair("crashthemarketonfriday", "capitalism", 1))
